@@ -102,7 +102,7 @@ const CountriesList = ({ searchCountry, onCountrySelect, selectedContinent, setC
       return null;
     }
 
-    if (selectedContinent.label) {
+    if (selectedContinent.label && !(selectedContinent.label === 'All')) {
       if (!country.region.includes(selectedContinent.label)) {
         return null;
       }

@@ -36,7 +36,7 @@ const ToggleTheme = () => {
   return (
     <BackgroundToggle href="#0" onClick={() => switchTheme(theme === 'dark' ? 'light' : 'dark')}>
       {theme === 'dark' ? <ion-icon name="moon"></ion-icon> : <ion-icon name="moon-outline"></ion-icon>}
-      Dark Mode
+      {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
     </BackgroundToggle>
   );
 };

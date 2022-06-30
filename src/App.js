@@ -29,6 +29,10 @@ const SearchContainer = styled.div`
 
 const options = [
   {
+    label: 'All',
+    value: 'all'
+  },
+  {
     label: 'Africa',
     value: 'africa',
   },
