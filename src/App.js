@@ -30,7 +30,7 @@ const SearchContainer = styled.div`
 const options = [
   {
     label: 'All',
-    value: 'all'
+    value: 'all',
   },
   {
     label: 'Africa',
@@ -65,6 +65,11 @@ export default () => {
     setSearchCountry(searchText);
   };
 
+  // * [Get all countries from nav link] *
+  const onLogoClick = () => {
+    setSearchCountry('')
+  }
+
   // * [Get selected country from CountriesList component] *
   const onCountrySelect = selected => {
     setSelectedCountry(selected);
@@ -76,10 +81,10 @@ export default () => {
 
   return (
     <>
-      <Header />
+      <Header onLogoClick={onLogoClick} />
       <Container>
         <Route path="/">
-          <SearchContainer className="search-container">
+          <SearchContainer>
             <Search placeholder="Search for a country..." onSearchSubmit={onSearchSubmit} />
             <Filter options={options} dropdownTitle="Filter by Region" selected={selectedContinent} setSelectedChange={setSelectedContinent} />
           </SearchContainer>

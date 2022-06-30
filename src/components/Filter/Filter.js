@@ -24,20 +24,6 @@ const SelectedContinent = styled.div`
   align-items: center;
   cursor: pointer;
   border-radius: 4px;
-  ion-icon {
-    animation-name: animation;
-    animation-duration: 0.3s;
-    &.animated {
-      @keyframes animation {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(90deg);
-        }
-      }
-    }
-  }
 `;
 
 const ListContainer = styled.ul`
@@ -114,7 +100,7 @@ const Filter = ({ options, dropdownTitle, selected, setSelectedChange }) => {
     <Dropdown className="dropdown" ref={containerRef} onClick={() => setOpen(!open)}>
       <SelectedContinent>
         <p>{selected.label ? selected.label : dropdownTitle}</p>
-        <ion-icon name="chevron-forward-outline" className={open ? 'animated' : ''}></ion-icon>
+        <ion-icon name="chevron-forward-outline"></ion-icon>
       </SelectedContinent>
       <ListContainer className={open ? 'show-list' : ''}>{renderedOptions}</ListContainer>
     </Dropdown>

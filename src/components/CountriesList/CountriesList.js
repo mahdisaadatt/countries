@@ -112,7 +112,7 @@ const CountriesList = ({ searchCountry, onCountrySelect, selectedContinent, setC
       <Link href={`/detail/${country.alpha3Code}`} key={country.alpha3Code}>
         <div className="country" onClick={() => onCountrySelect(country)}>
           <div className="img-container">
-            <img className="country-img" src={country.flags.svg ? country.flags.svg : country.flags.png} alt={`${country.name} Flag`} />
+            <img className="country-img" src={country.flags.svg ? country.flags.svg : country.flags.png} alt={`${country.name} Flag`} loading='lazy' />
           </div>
           <div className="info-container">
             <h3 className="country-name">{country.name}</h3>

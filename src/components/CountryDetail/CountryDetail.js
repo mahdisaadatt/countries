@@ -28,14 +28,14 @@ const Country = styled.div`
 `;
 const ImgContainer = styled.div`
   width: 50%;
-  height: 400px;
+  height: auto;
   @media only screen and (max-width: 992px) {
     width: 100%;
   }
   img {
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    object-fit: contain;
   }
 `;
 const InfoContainer = styled.div`
@@ -99,14 +99,17 @@ const CountryDetail = ({ selectedCountry, allCountries }) => {
     return country;
   });
 
-  const borders = selectedCountry.borders.map(border => {
-    return (
-      <Link href={`/detail/${border}`} key={border}>
-        {/* TODO: change border code to border name */}
-        {border}
-      </Link>
-    );
-  });
+  let borders;
+  if (selectedCountry.borders) {
+    borders = selectedCountry.borders.map(border => {
+      return (
+        <Link href={`/detail/${border}`} key={border}>
+          {/* TODO: change border code to border name */}
+          {border}
+        </Link>
+      );
+    });
+  }
   return (
     <Container>
       <BackButton />
@@ -146,7 +149,7 @@ const CountryDetail = ({ selectedCountry, allCountries }) => {
               </p>
             </div>
           </Info>
-          <BorderCountries borders={borders} />
+          {borders ? <BorderCountries borders={borders} /> : 'It has no border'}
         </InfoContainer>
       </Country>
     </Container>

@@ -18,20 +18,20 @@ const Container = styled.div`
   }
   &:hover {
     ion-icon {
-      right: 5px;
+      right: 10px;
     }
   }
   ion-icon {
     position: relative;
     transition: all 0.3s ease;
-    right: 10px;
+    right: 5px;
   }
 `;
 
 const BackButton = () => {
   return (
     // TODO: change back button style
-    <Link href="/">
+    <Link href='/'>
       <Container>
         <ion-icon name="arrow-back-outline"></ion-icon>
         Back
