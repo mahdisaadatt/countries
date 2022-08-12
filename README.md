@@ -32,7 +32,7 @@ Users should be able to:
 ### Links
 
 - Solution URL: [https://github.com/mahdisaadatt/countries](https://github.com/mahdisaadatt/countries)
-- Live Site URL: [https://country-finder-api.vercel.app/](https://country-finder-api.vercel.app/)
+- Live Site URL: [https://find-country-app.vercel.app/](https://find-country-app.vercel.app/)
 
 ## My process
 
