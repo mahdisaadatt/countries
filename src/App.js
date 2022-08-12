@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from './components/Header/Header';
-import Search from './components/Search/Search';
-import Filter from './components/Filter/Filter';
-import CountriesList from './components/CountriesList/CountriesList';
-import CountryDetail from './components/CountryDetail/CountryDetail';
-import Route from './components/Route';
+import Header from './components/Header';
+import Search from './components/Search';
+import Filter from './components/Filter';
+import CountriesList from './components/CountriesList';
+import CountryDetail from './components/CountryDetail';
 import './App.css';
 
 const Container = styled.div`
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 16px 16px;
 `;
 
 const SearchContainer = styled.div`
@@ -58,42 +58,54 @@ export default () => {
   const [selectedContinent, setSelectedContinent] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [searchCountry, setSearchCountry] = useState('');
-  const [allCountries, setAllCountries] = useState([]);
 
   // * [Get country name from Search component] *
   const onSearchSubmit = searchText => {
     setSearchCountry(searchText);
   };
 
-  // * [Get all countries from nav link] *
-  const onLogoClick = () => {
-    setSearchCountry('')
-  }
-
   // * [Get selected country from CountriesList component] *
   const onCountrySelect = selected => {
     setSelectedCountry(selected);
   };
-
-  const setCountries = countries => {
-    setAllCountries(countries);
-  };
-
+  
   return (
     <>
-      <Header onLogoClick={onLogoClick} />
+      <Header />
       <Container>
-        <Route path="/">
-          <SearchContainer>
-            <Search placeholder="Search for a country..." onSearchSubmit={onSearchSubmit} />
-            <Filter options={options} dropdownTitle="Filter by Region" selected={selectedContinent} setSelectedChange={setSelectedContinent} />
-          </SearchContainer>
-          <CountriesList setCountries={setCountries} selectedContinent={selectedContinent} searchCountry={searchCountry} onCountrySelect={onCountrySelect} />
-        </Route>
-        <Route path={selectedCountry ? `/detail/${selectedCountry.alpha3Code}` : ''}>
-          {/* TODO: Fixing route for refresh page and hiding elem */}
-          <CountryDetail allCountries={allCountries} selectedCountry={selectedCountry} />
-        </Route>
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <>
+                <SearchContainer>
+                  <Search
+                    placeholder="Search for a country..."
+                    onSearchSubmit={onSearchSubmit}
+                  />
+                  <Filter
+                    options={options}
+                    dropdownTitle="Filter by Region"
+                    selected={selectedContinent}
+                    setSelectedChange={setSelectedContinent}
+                  />
+                </SearchContainer>
+                <CountriesList
+                  selectedContinent={selectedContinent}
+                  searchCountry={searchCountry}
+                  onCountrySelect={onCountrySelect}
+                />
+              </>
+            }
+          />
+
+          <Route
+            exact
+            path="/details/:countryCode"
+            element={<CountryDetail selectedCountry={selectedCountry} />}
+          />
+        </Routes>
       </Container>
     </>
   );

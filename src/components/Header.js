@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import ToggleTheme from '../ToggleTheme/ToggleTheme';
-import Link from '../Link';
+import ToggleTheme from './ToggleTheme';
+import { Link } from 'react-router-dom';
 
 const Nav = styled.nav`
   width: 100%;
@@ -36,11 +36,11 @@ const NavContainer = styled.div`
   }
 `;
 
-const Header = ({ onLogoClick }) => {
+const Header = () => {
   return (
     <Nav>
       <NavContainer>
-        <Link href="/" onClick={onLogoClick}>
+        <Link to="/">
           <h2>Where in the world?</h2>
         </Link>
         <ToggleTheme />

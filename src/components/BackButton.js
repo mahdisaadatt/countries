@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from '../Link';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -7,8 +7,8 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 130px;
-  height: 40px;
+  width: 100%;
+  height: 100%;
   border-radius: 4px;
   background-color: var(--dark-blue);
   box-shadow: var(--midnight-gray) 0px 1px 5px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
@@ -28,10 +28,15 @@ const Container = styled.div`
   }
 `;
 
+const style = {
+  width: '140px',
+  height: '40px',
+  display: 'flex',
+};
+
 const BackButton = () => {
   return (
-    // TODO: change back button style
-    <Link href='/'>
+    <Link to={-1} style={style}>
       <Container>
         <ion-icon name="arrow-back-outline"></ion-icon>
         Back

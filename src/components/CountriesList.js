@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import api from '../../apis/api';
-import Link from '../Link';
+import api from '../apis/api';
+import { Link } from 'react-router-dom';
 
 const CountriesListContainer = styled.div`
   display: grid;
@@ -67,7 +67,7 @@ const CountriesListContainer = styled.div`
   }
 `;
 
-const CountriesList = ({ searchCountry, onCountrySelect, selectedContinent, setCountries }) => {
+const CountriesList = ({ searchCountry, selectedContinent, onCountrySelect }) => {
   const [responseCountries, setResponseCountries] = useState([]);
 
   // * [Fetch Countries] *
@@ -79,7 +79,6 @@ const CountriesList = ({ searchCountry, onCountrySelect, selectedContinent, setC
         localStorage.setItem('countries', JSON.stringify(data));
         setResponseCountries(JSON.parse(localStorage.getItem('countries')));
       }
-
       setResponseCountries(JSON.parse(localStorage.getItem('countries')));
     } catch (err) {
       console.log(err);
@@ -87,17 +86,9 @@ const CountriesList = ({ searchCountry, onCountrySelect, selectedContinent, setC
   };
   useEffect(() => {
     fetchCountries();
-  }, [searchCountry]);
-
-  useEffect(() => {
-    setCountries(responseCountries);
-  });
+  }, []);
 
   const rendered = responseCountries.map(country => {
-    const n = country.population;
-    const numberFormatter = Intl.NumberFormat('en-US');
-    const formatted = numberFormatter.format(n);
-
     if (!country.name.toLowerCase().includes(searchCountry) && !country.name.includes(searchCountry)) {
       return null;
     }
@@ -109,16 +100,16 @@ const CountriesList = ({ searchCountry, onCountrySelect, selectedContinent, setC
     }
 
     return (
-      <Link href={`/detail/${country.alpha3Code}`} key={country.alpha3Code}>
-        <div className="country" onClick={() => onCountrySelect(country)}>
+      <Link to={`/details/${country.alpha3Code}`} onClick={() => onCountrySelect(country)} key={country.alpha3Code}>
+        <div className="country">
           <div className="img-container">
-            <img className="country-img" src={country.flags.svg ? country.flags.svg : country.flags.png} alt={`${country.name} Flag`} loading='lazy' />
+            <img className="country-img" src={country.flags.svg ? country.flags.svg : country.flags.png} alt={`${country.name} Flag`} loading="lazy" />
           </div>
           <div className="info-container">
             <h3 className="country-name">{country.name}</h3>
             <div className="country-info">
               <p>
-                Population: <span>{formatted}</span>
+                Population: <span>{country.population.toLocaleString()}</span>
               </p>
               <p>
                 Region: <span>{country.region}</span>

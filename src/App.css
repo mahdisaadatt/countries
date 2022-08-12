@@ -43,7 +43,14 @@ body {
   width: 100%;
   height: 100%;
   transition: background-color 0.1s linear;
+  /* scrollbar-width: none;
+  -ms-overflow-style: none; */
 }
+/* ::-webkit-scrollbar {
+  display: none;
+  width: 10px;
+  height: auto;
+} */
 
 body.dark {
   background-color: var(--bg-dark);

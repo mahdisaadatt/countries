@@ -10,7 +10,6 @@ This is a solution to the [REST Countries API with color theme switcher challeng
   - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
-  - [Continued development](#continued-development)
 - [Author](#author)
 
 ## Overview
@@ -45,10 +44,6 @@ Users should be able to:
 - CSS Grid
 - [React](https://reactjs.org/) - JS library
 - [Styled Components](https://styled-components.com/) - For styles
-
-### Continued development
-
-I will fix router in this project and add some features.
 
 ## Author
 

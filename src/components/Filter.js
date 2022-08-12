@@ -97,12 +97,18 @@ const Filter = ({ options, dropdownTitle, selected, setSelectedChange }) => {
     );
   });
   return (
-    <Dropdown className="dropdown" ref={containerRef} onClick={() => setOpen(!open)}>
+    <Dropdown
+      className="dropdown"
+      ref={containerRef}
+      onClick={() => setOpen(!open)}
+    >
       <SelectedContinent>
         <p>{selected.label ? selected.label : dropdownTitle}</p>
         <ion-icon name="chevron-forward-outline"></ion-icon>
       </SelectedContinent>
-      <ListContainer className={open ? 'show-list' : ''}>{renderedOptions}</ListContainer>
+      <ListContainer className={open ? 'show-list' : ''}>
+        {renderedOptions}
+      </ListContainer>
     </Dropdown>
   );
 };

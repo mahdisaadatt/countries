@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Link from '../Link';
-import BackButton from '../BackButton/BackButton';
-import BorderCountries from '../BorderCountries/BorderCountries';
+import { Link } from 'react-router-dom';
+import BackButton from './BackButton';
+import BorderCountries from './BorderCountries';
+import api from '../apis/api';
+import { useParams } from 'react-router-dom';
 
 const Container = styled.div`
   width: 100%;
@@ -70,71 +72,88 @@ const Info = styled.div`
   }
 `;
 
-const CountryDetail = ({ selectedCountry, allCountries }) => {
-  // * [Numbers Formatter] *
-  const n = selectedCountry.population;
-  const numberFormatter = Intl.NumberFormat('en-US');
-  const formatted = numberFormatter.format(n);
+const CountryDetail = ({ selectedCountry }) => {
+  const [fetchedCountry, setFetchedCountry] = useState(selectedCountry);
+  const { countryCode } = useParams();
+  const fetchCountry = async countryCode => {
+    const res = await api.get(`/alpha/${countryCode}`);
+    const data = await res.data;
+    setFetchedCountry(data);
+  };
+  useEffect(() => {
+    fetchCountry(countryCode);
+  }, [countryCode]);
 
   // * [Words Formatter] *
   const formatWords = word => {
-    const l = Array.from(word);
-    const langFormatter = l.map(index => index.key);
-    return langFormatter.join(', ');
+    const w = Array.from(word);
+    const wordFormatter = w.map(index => index.key);
+    return wordFormatter.join(', ');
   };
 
-  const topLevelDomain = selectedCountry.topLevelDomain.map(domain => {
-    return <span key={domain}>{domain}</span>;
-  });
-
-  const currencies = selectedCountry.currencies.map(({ name }) => {
-    return <span key={name}>{name}</span>;
-  });
-
-  const languages = selectedCountry.languages.map(({ name }) => {
-    return <span key={name}>{name}</span>;
-  });
-
-  const countries = allCountries.map(country => {
-    return country;
-  });
-
   let borders;
-  if (selectedCountry.borders) {
-    borders = selectedCountry.borders.map(border => {
-      return (
-        <Link href={`/detail/${border}`} key={border}>
-          {/* TODO: change border code to border name */}
-          {border}
-        </Link>
-      );
+  let topLevelDomain;
+  let currencies;
+  let languages;
+  if (fetchedCountry) {
+    topLevelDomain = fetchedCountry.topLevelDomain.map(domain => {
+      return <span key={domain}>{domain}</span>;
     });
+
+    currencies = fetchedCountry.currencies.map(({ name }) => {
+      return <span key={name}>{name}</span>;
+    });
+
+    languages = fetchedCountry.languages.map(({ name }) => {
+      return <span key={name}>{name}</span>;
+    });
+
+    if (fetchedCountry.borders) {
+      borders = fetchedCountry.borders.map(border => {
+        return (
+          <Link to={`/details/${border}`} key={border}>
+            {border}
+          </Link>
+        );
+      });
+    }
+  }
+  if (!fetchedCountry) {
+    return <h1>Loading ...</h1>;
   }
   return (
     <Container>
       <BackButton />
       <Country>
         <ImgContainer>
-          <img src={selectedCountry.flags.svg ? selectedCountry.flags.svg : selectedCountry.flags.png} alt={`${selectedCountry.name} Flag`} />
+          <img
+            src={
+              fetchedCountry.flags.svg
+                ? fetchedCountry.flags.svg
+                : fetchedCountry.flags.png
+            }
+            alt={`${fetchedCountry.name} Flag`}
+          />
         </ImgContainer>
         <InfoContainer>
-          <h2>{selectedCountry.name}</h2>
+          <h2>{fetchedCountry.name}</h2>
           <Info>
             <div>
               <p>
-                Native Name: <span>{selectedCountry.nativeName}</span>
+                Native Name: <span>{fetchedCountry.nativeName}</span>
               </p>
               <p>
-                Population: <span>{formatted}</span>
+                Population:{' '}
+                <span>{fetchedCountry.population.toLocaleString()}</span>
               </p>
               <p>
-                Region: <span>{selectedCountry.region}</span>
+                Region: <span>{fetchedCountry.region}</span>
               </p>
               <p>
-                Sub Region: <span>{selectedCountry.subregion}</span>
+                Sub Region: <span>{fetchedCountry.subregion}</span>
               </p>
               <p>
-                Capital: <span>{selectedCountry.capital}</span>
+                Capital: <span>{fetchedCountry.capital}</span>
               </p>
             </div>
             <div>

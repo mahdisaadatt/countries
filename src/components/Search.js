@@ -26,14 +26,20 @@ const Input = styled.input`
 
 const Search = ({ onSearchSubmit, placeholder }) => {
   const [term, setTerm] = useState('');
+
+  const onSearchChange = e => {
+    setTerm(e.target.value);
+    onSearchSubmit(term)
+  };
+
   const onFormSubmit = e => {
     e.preventDefault();
-    onSearchSubmit(term);
+    // onSearchSubmit(term);
   };
   return (
     <Form onSubmit={onFormSubmit}>
       <ion-icon name="search"></ion-icon>
-      <Input placeholder={placeholder} type="text" value={term} onChange={e => setTerm(e.target.value)} />
+      <Input placeholder={placeholder} type="text" value={term} onChange={onSearchChange} />
     </Form>
   );
 };
