@@ -79,7 +79,7 @@ const CountriesList = ({
     try {
       if (!localStorage.getItem('countries')) {
         const res = await axios.get(
-          '/countries?fields=name,flags,alpha2Code,alpha3Code,population,region,capital,nativeName,subregion,topLevelDomain,currencies,languages,borders'
+          '/api/countries?fields=name,flags,alpha2Code,alpha3Code,population,region,capital,nativeName,subregion,topLevelDomain,currencies,languages,borders'
         );
         const data = await res.data;
         localStorage.setItem('countries', JSON.stringify(data));
