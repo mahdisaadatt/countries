@@ -76,7 +76,9 @@ const CountryDetail = ({ selectedCountry }) => {
   const [fetchedCountry, setFetchedCountry] = useState(selectedCountry);
   const { countryCode } = useParams();
   const fetchCountry = async countryCode => {
-    const res = await axios.get(`/api/alpha/${countryCode}`);
+    const res = await axios.get(
+      `/api/alpha/${countryCode}`
+    );
     const data = await res.data;
     setFetchedCountry(data);
   };
